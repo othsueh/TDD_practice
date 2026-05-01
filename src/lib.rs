@@ -2,15 +2,25 @@ const BOOK_PRICE: f64 = 8.0;
 const DISCOUNTS: [f64; 6] = [0.0, 0.0, 0.05, 0.10, 0.20, 0.25];
 
 pub fn calculate_price(cart: &[u8]) -> f64 {
-    let mut unique: Vec<u8> = Vec::new();
+    let mut counts = [0u32; 6]; // counts[0..5] for books 1..5
     for &book in cart {
-        if !unique.contains(&book) {
-            unique.push(book);
+        counts[book as usize] += 1;
+    }
+
+    let mut total = 0.0;
+    loop {
+        // pick one of each distinct book still remaining
+        let group_size = counts.iter().filter(|&&c| c > 0).count();
+        if group_size == 0 {
+            break;
+        }
+        let discount = DISCOUNTS[group_size];
+        total += group_size as f64 * BOOK_PRICE * (1.0 - discount);
+        for c in counts.iter_mut().filter(|c| **c > 0) {
+            *c -= 1;
         }
     }
-    let distinct = unique.len();
-    let discount = DISCOUNTS[distinct];
-    cart.len() as f64 * BOOK_PRICE * (1.0 - discount)
+    total
 }
 
 #[cfg(test)]
