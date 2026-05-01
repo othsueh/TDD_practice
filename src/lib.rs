@@ -52,4 +52,10 @@ mod tests {
         // group {1,2} at 5% off + group {1} at 0% = 15.2 + 8.0 = 23.2
         assert_eq!(calculate_price(&[1, 1, 2]), 23.2);
     }
+
+    #[test]
+    fn three_different_books_get_10_percent_discount() {
+        // group {1,2,3} at 10% off = 3 * 8 * 0.9 = 21.6
+        assert_eq!(calculate_price(&[1, 2, 3]), 21.6);
+    }
 }
