@@ -22,4 +22,9 @@ mod tests {
     fn two_copies_of_same_book_costs_16_eur() {
         assert_eq!(calculate_price(&[1, 1]), 16.0);
     }
+
+    #[test]
+    fn two_different_books_get_5_percent_discount() {
+        assert_eq!(calculate_price(&[1, 2]), 15.2);
+    }
 }
