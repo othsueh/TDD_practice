@@ -36,4 +36,10 @@ mod tests {
     fn two_different_books_get_5_percent_discount() {
         assert_eq!(calculate_price(&[1, 2]), 15.2);
     }
+
+    #[test]
+    fn two_same_one_different_splits_into_optimal_groups() {
+        // group {1,2} at 5% off + group {1} at 0% = 15.2 + 8.0 = 23.2
+        assert_eq!(calculate_price(&[1, 1, 2]), 23.2);
+    }
 }
