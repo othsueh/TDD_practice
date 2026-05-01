@@ -1,5 +1,7 @@
-pub fn calculate_price(_cart: &[u8]) -> f64 {
-    0.0
+const BOOK_PRICE: f64 = 8.0;
+
+pub fn calculate_price(cart: &[u8]) -> f64 {
+    cart.len() as f64 * BOOK_PRICE
 }
 
 #[cfg(test)]
