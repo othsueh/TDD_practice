@@ -1,3 +1,7 @@
+pub fn calculate_price(_cart: &[u8]) -> f64 {
+    0.0
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
