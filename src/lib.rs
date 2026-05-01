@@ -1,7 +1,16 @@
 const BOOK_PRICE: f64 = 8.0;
+const DISCOUNTS: [f64; 6] = [0.0, 0.0, 0.05, 0.10, 0.20, 0.25];
 
 pub fn calculate_price(cart: &[u8]) -> f64 {
-    cart.len() as f64 * BOOK_PRICE
+    let mut unique: Vec<u8> = Vec::new();
+    for &book in cart {
+        if !unique.contains(&book) {
+            unique.push(book);
+        }
+    }
+    let distinct = unique.len();
+    let discount = DISCOUNTS[distinct];
+    cart.len() as f64 * BOOK_PRICE * (1.0 - discount)
 }
 
 #[cfg(test)]
