@@ -17,4 +17,9 @@ mod tests {
     fn one_book_costs_8_eur() {
         assert_eq!(calculate_price(&[1]), 8.0);
     }
+
+    #[test]
+    fn two_copies_of_same_book_costs_16_eur() {
+        assert_eq!(calculate_price(&[1, 1]), 16.0);
+    }
 }
