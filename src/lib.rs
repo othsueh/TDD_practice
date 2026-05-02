@@ -80,4 +80,11 @@ mod tests {
         // group {1,2,3,4,5} at 25% off = 5 * 8 * 0.75 = 30.0
         assert_eq!(calculate_price(&[1, 2, 3, 4, 5]), 30.0);
     }
+
+    #[test]
+    fn greedy_trap_two_groups_of_four_beats_five_plus_three() {
+        // greedy: {1,2,3,4,5} + {1,2,3} = 30.0 + 21.6 = 51.6
+        // optimal: {1,2,3,4} + {1,2,3,5} = 25.6 + 25.6 = 51.2
+        assert_eq!(calculate_price(&[1, 1, 2, 2, 3, 3, 4, 5]), 51.2);
+    }
 }
