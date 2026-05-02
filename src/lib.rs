@@ -95,6 +95,12 @@ mod tests {
     }
 
     #[test]
+    fn eight_copies_of_same_book_no_discount() {
+        // all identical — 8 groups of 1, no discount = 8 * 8.0 = 64.0
+        assert_eq!(calculate_price(&[1, 1, 1, 1, 1, 1, 1, 1]), 64.0);
+    }
+
+    #[test]
     fn greedy_trap_two_groups_of_four_beats_five_plus_three() {
         // greedy: {1,2,3,4,5} + {1,2,3} = 30.0 + 21.6 = 51.6
         // optimal: {1,2,3,4} + {1,2,3,5} = 25.6 + 25.6 = 51.2
