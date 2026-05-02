@@ -4,11 +4,8 @@ const DISCOUNTS: [f64; 6] = [0.0, 0.0, 0.05, 0.10, 0.20, 0.25];
 pub fn calculate_price(cart: &[u8]) -> f64 {
     let mut counts = build_counts(cart);
     let mut groups: Vec<usize> = Vec::new();
-    loop {
+    while counts.iter().any(|&c| c > 0) {
         let group_size = counts.iter().filter(|&&c| c > 0).count();
-        if group_size == 0 {
-            break;
-        }
         groups.push(group_size);
         take_one_of_each(&mut counts);
     }
