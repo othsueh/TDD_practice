@@ -3,16 +3,28 @@ const DISCOUNTS: [f64; 6] = [0.0, 0.0, 0.05, 0.10, 0.20, 0.25];
 
 pub fn calculate_price(cart: &[u8]) -> f64 {
     let mut counts = build_counts(cart);
-    let mut total = 0.0;
+    let mut groups: Vec<usize> = Vec::new();
     loop {
         let group_size = counts.iter().filter(|&&c| c > 0).count();
         if group_size == 0 {
             break;
         }
-        total += group_price(group_size);
+        groups.push(group_size);
         take_one_of_each(&mut counts);
     }
-    total
+    optimize_groups(&mut groups);
+    groups.iter().map(|&s| group_price(s)).sum()
+}
+
+fn optimize_groups(groups: &mut [usize]) {
+    // Replace every (5-group, 3-group) pair with two 4-groups — always cheaper
+    let fives = groups.iter().filter(|&&s| s == 5).count();
+    let threes = groups.iter().filter(|&&s| s == 3).count();
+    let swaps = fives.min(threes);
+    for _ in 0..swaps {
+        *groups.iter_mut().find(|s| **s == 5).unwrap() = 4;
+        *groups.iter_mut().find(|s| **s == 3).unwrap() = 4;
+    }
 }
 
 fn build_counts(cart: &[u8]) -> [u32; 6] {
