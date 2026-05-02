@@ -58,4 +58,16 @@ mod tests {
         // group {1,2,3} at 10% off = 3 * 8 * 0.9 = 21.6
         assert_eq!(calculate_price(&[1, 2, 3]), 21.6);
     }
+
+    #[test]
+    fn four_different_books_get_20_percent_discount() {
+        // group {1,2,3,4} at 20% off = 4 * 8 * 0.8 = 25.6
+        assert_eq!(calculate_price(&[1, 2, 3, 4]), 25.6);
+    }
+
+    #[test]
+    fn five_different_books_get_25_percent_discount() {
+        // group {1,2,3,4,5} at 25% off = 5 * 8 * 0.75 = 30.0
+        assert_eq!(calculate_price(&[1, 2, 3, 4, 5]), 30.0);
+    }
 }
