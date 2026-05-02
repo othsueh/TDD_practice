@@ -106,4 +106,16 @@ mod tests {
         // optimal: {1,2,3,4} + {1,2,3,5} = 25.6 + 25.6 = 51.2
         assert_eq!(calculate_price(&[1, 1, 2, 2, 3, 3, 4, 5]), 51.2);
     }
+
+    #[test]
+    fn greedy_trap_scaled_three_times() {
+        // [1,1,2,2,3,3,4,5] x3 — greedy: [5,5,5,3,3,3], optimized: [4,4,4,4,4,4]
+        // 6 * 25.6 = 153.6
+        assert_eq!(
+            calculate_price(&[
+                1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5
+            ]),
+            153.6
+        );
+    }
 }
