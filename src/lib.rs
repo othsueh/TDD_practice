@@ -2,15 +2,19 @@ const BOOK_PRICE: f64 = 8.0;
 const DISCOUNTS: [f64; 6] = [0.0, 0.0, 0.05, 0.10, 0.20, 0.25];
 
 pub fn calculate_price(cart: &[u8]) -> f64 {
-    let mut counts = build_counts(cart);
-    let mut groups: Vec<usize> = Vec::new();
-    while counts.iter().any(|&c| c > 0) {
-        let group_size = counts.iter().filter(|&&c| c > 0).count();
-        groups.push(group_size);
-        take_one_of_each(&mut counts);
-    }
+    let mut groups = build_groups(cart);
     optimize_groups(&mut groups);
     groups.iter().map(|&s| group_price(s)).sum()
+}
+
+fn build_groups(cart: &[u8]) -> Vec<usize> {
+    let mut counts = build_counts(cart);
+    let mut groups = Vec::new();
+    while counts.iter().any(|&c| c > 0) {
+        groups.push(counts.iter().filter(|&&c| c > 0).count());
+        take_one_of_each(&mut counts);
+    }
+    groups
 }
 
 fn optimize_groups(groups: &mut [usize]) {
